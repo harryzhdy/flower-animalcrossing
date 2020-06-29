@@ -1,11 +1,16 @@
 package com.springboot.mybatis.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.springboot.mybatis.entity.TestUser;
 import com.springboot.mybatis.entity.User;
 import com.springboot.mybatis.mapper.UserMapper;
+import com.springboot.mybatis.mapper.UserXmlMapper;
 import com.springboot.mybatis.services.FlowerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -14,10 +19,14 @@ import java.util.Map;
 
 @RestController
 @EnableTransactionManagement
+@SpringBootApplication
 public class UserController {
 
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private UserXmlMapper userXmlMapper;
 
     /*@Autowired
     private FlowerService flowerService;*/
@@ -33,6 +42,20 @@ public class UserController {
     @RequestMapping("/add")
     public void addOne(User user){
         userMapper.addOne(user);
+    }
+
+    /*
+     * get auto increment primary key
+     */
+    @RequestMapping("/add/test")
+    public int addTestUser(@RequestBody TestUser testUser) {
+        try {
+            int count = userXmlMapper.addUser(testUser);
+            return testUser.getId();
+        } catch (Exception e) {
+        }
+
+        return -1;
     }
 
     @RequestMapping("/update")
