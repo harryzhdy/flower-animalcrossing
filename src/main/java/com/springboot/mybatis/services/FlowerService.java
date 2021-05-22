@@ -10,6 +10,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
+//test for push
 public class FlowerService {
 
     private boolean isRose = false;
@@ -88,6 +90,7 @@ public class FlowerService {
         for (String gene : resultMap.keySet()) {
             resultMap.put(gene, resultMap.get(gene)/allCount);
         }
+
 
 
         return resultMap;
